@@ -33,9 +33,9 @@ for file in files:
             # 小さな「っ」から始まる語は飛ばす
             if yomi[0] == 'ッ':
                 continue
-            # 末尾に「ん」があるものはスキップ
-            if yomi[-1] == 'ン':
-                continue
+            # 末尾に「ん」があるものはスキップ (ヨミを得るために辞書引きする場合に困るため)
+            #if yomi[-1] == 'ン':
+            #    continue
             if title in uniq_check:
                 continue
             uniq_check[title] = True
