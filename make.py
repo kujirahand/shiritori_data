@@ -24,6 +24,18 @@ for file in files:
                 continue
             if not yomi:
                 continue
+            # 長すぎるものはスキップ
+            if len(yomi) > 10:
+                continue
+            # 短すぎるものもスキップ
+            if len(yomi) <= 1:
+                continue
+            # 小さな「っ」から始まる語は飛ばす
+            if yomi[0] == 'ッ':
+                continue
+            # 末尾に「ん」があるものはスキップ
+            if yomi[-1] == 'ン':
+                continue
             if title in uniq_check:
                 continue
             uniq_check[title] = True
