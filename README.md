@@ -4,3 +4,5 @@
 
 ## しりとりデータだけが欲しい方
 
+[こちらのRelease](https://github.com/kujirahand/shiritori_data/releases)から`out.zip`をダウンロードしてください。
+
