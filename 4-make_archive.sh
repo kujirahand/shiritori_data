@@ -1,6 +1,7 @@
 #!/bin/sh
 
 # outディレクトリを圧縮してout.zipを作成
+rm -f out/.DS_Store
 rm -f out.zip
 if [ -d "out" ]; then
     echo "Compressing out directory to out.zip..."
