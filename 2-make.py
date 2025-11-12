@@ -1,5 +1,11 @@
+#!/usr/bin/env python
 from glob import glob
 import json
+
+starts_with_exclode_list = [
+    "アッハ", "アハ", "ワハ", 
+    "イヒヒ","ウフ","エヘ","オホホ",
+]
 
 uniq_check = {}
 result = {}
@@ -25,13 +31,16 @@ for file in files:
             if not yomi:
                 continue
             # 長すぎるものはスキップ
-            if len(yomi) > 10:
+            if len(yomi) > 12:
                 continue
             # 短すぎるものもスキップ
             if len(yomi) <= 1:
                 continue
             # 小さな「っ」から始まる語は飛ばす
             if yomi[0] == 'ッ':
+                continue
+            # 笑い声などは飛ばす
+            if yomi.startswith("アハ") or yomi.startswith("ワハ") or yomi.startswith("ウフフ") :
                 continue
             # 末尾に「ん」があるものはスキップ (ヨミを得るために辞書引きする場合に困るため)
             #if yomi[-1] == 'ン':

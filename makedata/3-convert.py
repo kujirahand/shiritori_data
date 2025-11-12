@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import re
 
 IN_FILE = "data/titles2.txt"
