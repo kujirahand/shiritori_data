@@ -26,5 +26,5 @@ for file in files:
             i += 1
             if i % 10000 == 0:
                 print(f"  Processed {i} entries...", title, yomi, source)
-    kudb.insert_many(data)
+    kudb.insert_many(data, tag_name="title")
 kudb.close()
