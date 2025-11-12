@@ -20,7 +20,7 @@ re_katakana = re.compile(r'^[ァ-ンー]+$')
 nouns = set()
 
 exclide_list = [
-    "あへ", "む", "そっ", "ワールドイズマイン", 
+    "あへ", "む", "そっ", "ワールドイズマイン", "ホホ"
 ]
 
 def load_from_file(filename):
@@ -42,6 +42,7 @@ def load_text(filename):
     """テキストファイルを読み込み、名詞を抽出して nouns セットに追加する"""
     text = load_from_file(filename)
     lines = text.splitlines()
+    cnt = 0
     for line in lines:
         line = line.strip()
         if not line:
@@ -50,13 +51,17 @@ def load_text(filename):
         line = line.replace('｜', '')  # ルビ用記号削除
         node = tagger.parseToNode(line)
         while node:
+            word = node.surface.strip()
+            if re.match(r'^[a-zA-Z0-9]+$', word):
+                node = node.next
+                continue
             features = node.feature.split(',')
             # 「名詞,一般」のみ対象
             # print(features)
-            if features[0] == '名詞' and features[2] == '一般':
-                word = node.surface.strip()
+            # if features[0] == '名詞' and features[2] == '一般':
+            if features[0] == '名詞':               
                 # 一文字もOK、日本語文字のみ
-                if word and re_japanese.match(word) and len(word) <= 10:
+                if word and len(word) <= 15:
                     if word not in exclide_list:
                         nouns.add(word)
             node = node.next
@@ -74,6 +79,7 @@ with open(OUTPUT_FILE, 'w', newline='', encoding='utf-8') as f:
         if not yomi_text:
             continue
         if not re_katakana.match(yomi_text):
+            print('Skipping (not katakana):', noun, '->', yomi_text)
             continue
         f.write(f'{noun}\t{yomi_text}\n')
 

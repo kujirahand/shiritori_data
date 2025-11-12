@@ -2,7 +2,7 @@ import MeCab
 
 # MeCab初期化（辞書パスを指定する場合は -d オプションを追加）
 dicpath = "/opt/homebrew/lib/mecab/dic/mecab-ipadic-neologd"
-tagger = MeCab.Tagger((f"-Ochasen -d {dicpath}")) 
+tagger = MeCab.Tagger((f"-Ochasen -d {dicpath}"))
 
 def get_yomi(text: str) -> str:
     """文章を入力してヨミガナ（ひらがな）を返す"""
@@ -12,12 +12,14 @@ def get_yomi(text: str) -> str:
         features = node.feature.split(',')
         # 品詞情報など: ['名詞','一般','*','*','*','*','ヨミ','原形']
         if len(features) >= 8:
-            yomi = features[6]
+            # print("[DEBUG.mecab]", node.surface, features)
+            yomi = features[7]
             if yomi != '*':
                 result.append(yomi)
             else:
                 result.append(node.surface)
         else:
+            print("[DEBUG.mecab]", node.surface)
             result.append(node.surface)
         node = node.next
     return ''.join(result)

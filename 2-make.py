@@ -9,6 +9,25 @@ starts_with_exclode_list = [
     "フラ", "ヘロヘロ", "ハハハ", "ヒヒヒ", "ホホホ", "ホホホホ", "ヒュルル", "アヘ",
     "スヤスヤ", "ずっと", "夢じゃない", "びれ", "モシクハ",
     "グゥモォ", "ムクムク", "第一", "第二", "第三", "第四", "第五",
+    "グオォ", "ヘヘヘ", "オノレ", "ウシテモ", "人肉", "ん", "ないじゃない",
+    "いつまでも", "ン", "モゥ", "そこ", "ふふ", 
+    "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+    "０", "１", "２", "３", "４", "５", "６", "７", "８", "９",
+    "アアッ", "アトカラアトカラ", "アト",
+    "アニリン", "アブサン", "アラユル","フフ",
+    "ウハ","ウッフ","ウムッ","ウヨウヨ",
+    "ヘヘイ", "ヘエッ", "ヘヘン", "ヘエイ","ヘエッ","ヘエー",
+    "ジュゥォン","ジュ","ジンパジー","ナルモノニ","ガチガチ", "メチャクチャ",
+    "ウルトコロノ","ヨロヨロ","ガサガサ","ガチャガチャ","ガラガラ","ガンガン",
+    "ギュウギュウ","ギンギン","グチャグチャ","グラグラ","グングン","グンニャリ",
+    "ゲラゲラ","ゴチャゴチャ","ゴロゴロ","ザワザワ","ジャブジャブ","ジャラジャラ",
+    "ジュクジュク","ジョロジョロ","ズクズク","ズンズン","ドキドキ","ドンドン",
+    "バタバタ","バラバラ","ビクビク","ビチャビチャ","ビンビン","ブクブク",
+    "ブヨブヨ","ブルブル","ベタベタ","ベロベロ","ボロボロ","ボンヤリ","ポタポタ",
+    "ポンポン","マゴマゴ","マルマル","ミシミシ","ムズムズ","ムニャムニャ","メソメソ",
+    "モヤモヤ","モロモロ","ヤキモキ","ヤンヤン","ユラユラ","ヨチヨチ","ヨロヨロ",
+    "ラブラブ","リクツ","ルンルン","レロレロ","ロクデナシ","ワイワイ","ワラワラ",
+    "ドッコイ","ヨボヨボ","ナニイ","コトコトコトコト", "ナスリ",
 ]
 
 uniq_check = {}
@@ -22,23 +41,13 @@ for file in files:
             title, yomi = line.split('\t')
             title = title.strip()
             yomi = yomi.strip()
-            # 数字から始まるものはスキップ
-            if title[0] in '0123456789０１２３４５６７８９':
-                continue
             # 漢数字などをスキップ
             if re.match(r'^[一二三四五六七八九十百千万億兆年月日時分秒世紀]+$', title):
-                continue
-            # ひらがな→カタカナ
-            yomi = ''.join(
-                chr(ord(c) + 96) if 'ぁ' <= c <= 'ゖ' else c for c in yomi
-            )
-            # カタカナ以外があればスキップ
-            if any(not ('ァ' <= c <= 'ヶ') for c in yomi):
                 continue
             if not yomi:
                 continue
             # 長すぎるものはスキップ
-            if len(yomi) > 12:
+            if len(title) > 10:
                 continue
             # 短すぎるものもスキップ
             if len(yomi) <= 1:
@@ -46,8 +55,13 @@ for file in files:
             # 小さな「っ」から始まる語は飛ばす
             if yomi[0] == 'ッ':
                 continue
-            # 笑い声などは飛ばす
-            if yomi.startswith("アハ") or yomi.startswith("ワハ") or yomi.startswith("ウフフ") :
+            # 除外国を先頭に持つものはスキップ
+            skip_flag = False
+            for ex in starts_with_exclode_list:
+                if yomi.startswith(ex):
+                    skip_flag = True
+                    break
+            if skip_flag:
                 continue
             # 末尾に「ん」があるものはスキップ (ヨミを得るために辞書引きする場合に困るため)
             #if yomi[-1] == 'ン':
@@ -81,9 +95,12 @@ for file in files:
                 result[k] = []
             result[k].append((title, yomi))
 
+cnt = 0
 for key, values in result.items():
     with open(f'out/{key}.csv', 'w', encoding="utf-8") as f:
         for title, yomi in values:
             f.write(f'{title}\t{yomi}\t{key}\n')
+            cnt += 1
         #json.dump(values, f, ensure_ascii=False, indent=2)
         print(f'Wrote out/{key}.csv with {len(values)} entries')
+print("Total entries:", cnt)
