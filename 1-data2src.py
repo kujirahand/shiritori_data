@@ -5,7 +5,7 @@ import re
 import yomi
 
 # --- MeCab設定 ---
-tagger = MeCab.Tagger()  # -Ochasen は不要
+tagger = yomi.tagger
 
 # --- 入出力ファイル名 ---
 INPUT_FILE = 'data/data.txt'
@@ -19,6 +19,9 @@ re_katakana = re.compile(r'^[ァ-ンー]+$')
 # --- 名詞の集合（重複除去） ---
 nouns = set()
 
+exclide_list = [
+    "あへ", "む", "そっ", "ワールドイズマイン", 
+]
 
 def load_from_file(filename):
     """テキストファイルを読み込み、名詞を抽出して nouns セットに追加する"""
@@ -54,7 +57,8 @@ def load_text(filename):
                 word = node.surface.strip()
                 # 一文字もOK、日本語文字のみ
                 if word and re_japanese.match(word) and len(word) <= 10:
-                    nouns.add(word)
+                    if word not in exclide_list:
+                        nouns.add(word)
             node = node.next
 
 # --- enum ---
@@ -73,4 +77,5 @@ with open(OUTPUT_FILE, 'w', newline='', encoding='utf-8') as f:
             continue
         f.write(f'{noun}\t{yomi_text}\n')
 
+print(nouns)
 print(f'抽出完了: {len(nouns)} 件の名詞を {OUTPUT_FILE} に出力しました。')
