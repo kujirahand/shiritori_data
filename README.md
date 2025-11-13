@@ -7,7 +7,8 @@
 
 ## しりとりデータだけが欲しい方
 
-[こちらのRelease](https://github.com/kujirahand/shiritori_data/releases)から`out.zip`をダウンロードしてください。
+[こちらのRelease](https://github.com/kujirahand/shiritori_data/releases)から`out.zip`または`shiritori.db.zip`をダウンロードしてください。
+`shiritori.db.zip`は、[kudb](https://pypi.org/project/kudb/)用のデータベース(SQLite)形式です。
 
 ## ツールを利用して自分で辞書データを作成したい方
 
