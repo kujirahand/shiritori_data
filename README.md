@@ -32,8 +32,6 @@ brew install mecab mecab-ipadic
 pip install -r requirements.txt
 ```
 
-また、`make`をインストールしておいてください。
-
 ## 単語データの作り方
 
 `data`フォルダの中に、テキストファイルを保存します。テキストファイルに、しりとりで使いたい単語を含むテキストを記述してください。
@@ -41,10 +39,13 @@ pip install -r requirements.txt
 準備ができたら、以下のコマンドを実行します。
 
 ```
+# Windowsなら
+make.bat
+# macOS/Linuxなら
+make.sh
+# あるいは
 make all
 ```
 
-コマンドの実行には、`make`が必要です。もし、なければ、1-xxx、2-xxxのようにスクリプトが用意されていますので、番号順にスクリプトを実行してください。
-
-`out`フォルダにしりとりデータが作成されます。
-
+すると、`out`フォルダにしりとりデータが作成されます。
+また、`shiritori.db`という名前でkudb用のデータベースファイルも作成されます。
