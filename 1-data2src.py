@@ -57,9 +57,11 @@ def load_text(filename):
                 continue
             features = node.feature.split(',')
             # 「名詞,一般」のみ対象
-            # print(features)
-            # if features[0] == '名詞' and features[2] == '一般':
-            if features[0] == '名詞':               
+            # クラゲ ['名詞', '一般', '*', '*', '*', '*', 'クラゲ', 'クラゲ', 'クラゲ']
+            # ヒトデ ['名詞', '一般', '*', '*', '*', '*', 'ヒトデ', 'ヒトデ', 'ヒトデ']
+            # サンショウウオ ['名詞', '一般', '*', '*', '*', '*', 'サンショウウオ', 'サンショウウオ', 'サンショーウオ']
+            if features[0] == '名詞' and features[1] == '一般':
+                print(word, features)
                 # 一文字もOK、日本語文字のみ
                 if word and len(word) <= 15:
                     if word not in exclide_list:
