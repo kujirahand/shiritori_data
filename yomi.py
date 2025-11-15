@@ -1,8 +1,12 @@
+import os
 import MeCab
 
 # MeCab初期化（辞書パスを指定する場合は -d オプションを追加）
 dicpath = "/opt/homebrew/lib/mecab/dic/mecab-ipadic-neologd"
-tagger = MeCab.Tagger((f"-Ochasen -d {dicpath}"))
+if os.path.exists(dicpath):
+    tagger = MeCab.Tagger(f"-Ochasen -d {dicpath}")
+else:
+    tagger = MeCab.Tagger("-Ochasen")
 
 def get_yomi(text: str) -> str:
     """文章を入力してヨミガナ（ひらがな）を返す"""
