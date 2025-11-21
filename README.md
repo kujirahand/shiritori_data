@@ -13,10 +13,12 @@
 
 ツールの利用には、MeCabが必要です。MeCabはC++で書かれた高速な形態素解析エンジンで、多くの言語バインディングが提供されています。Pythonからも利用できます。
 
-Windowsであれば、下記にて、インストーラーをダウンロードできます。
+Windowsの場合は、WSLをセットアップして、Ubuntu/Linux上でMeCabをインストールして、作業を行ってください。Ubuntu/Linuxでは、下記のコマンドでMeCabをインストールできます。
 
-- [形態素解析エンジン MeCab](https://taku910.github.io/mecab/#download)
-
+```sh
+sudo apt update
+sudo apt install mecab mecab-ipadic
+```
 
 macOSの場合には、Homebrewを使ってインストールできます。Homebrewは、macOS用のパッケージ管理システムです。Homebrewがインストールされていない場合には、[Homebrew](https://brew.sh/index_ja)を参考にしてインストールしてください。
 Homebrewがインストールされたら、次のコマンドでMeCabをインストールできます。
@@ -38,8 +40,6 @@ pip install -r requirements.txt
 準備ができたら、以下のコマンドを実行します。
 
 ```
-# Windowsなら
-make.bat
 # macOS/Linuxなら
 make.sh
 # あるいは
