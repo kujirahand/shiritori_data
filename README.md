@@ -2,7 +2,8 @@
 
 このリポジトリは、テキストファイルなどのデータから「しりとり」用の辞書データを作成するためのツール群を提供します。
 
-基本的に、dataフォルダに、テキストファイル(*.txt)を保存します。そして、下記のライブラリをインストールした上で`make.bat`か`make.sh`を実行します。
+基本的に、dataフォルダに、テキストファイル(*.txt)を保存します。
+そして、下記のライブラリをインストールした上で`make.bat`か`make.sh`を実行します。
 
 ## しりとりデータだけが欲しい方
 
@@ -13,6 +14,8 @@
 
 ツールの利用には、MeCabが必要です。MeCabはC++で書かれた高速な形態素解析エンジンで、多くの言語バインディングが提供されています。Pythonからも利用できます。
 
+### Windows WSL/Ubuntu/Debianの場合
+
 Windowsの場合は、WSLをセットアップして、Ubuntu/Linux上でMeCabをインストールして、作業を行ってください。Ubuntu/Linuxでは、下記のコマンドでMeCabをインストールできます。
 
 ```sh
@@ -20,12 +23,16 @@ sudo apt update
 sudo apt install mecab mecab-ipadic
 ```
 
+### macOSの場合
+
 macOSの場合には、Homebrewを使ってインストールできます。Homebrewは、macOS用のパッケージ管理システムです。Homebrewがインストールされていない場合には、[Homebrew](https://brew.sh/index_ja)を参考にしてインストールしてください。
 Homebrewがインストールされたら、次のコマンドでMeCabをインストールできます。
 
 ```sh
 brew install mecab mecab-ipadic
 ```
+
+### 共通のセットアップ
 
 続いて、ライブラリをインストールします。
 
